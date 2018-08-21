@@ -1,0 +1,28 @@
+.panel {
+  display: flex;
+  padding: 10px;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 5px 0px #636060;
+}
+
+.searhPanel {
+  justify-content: flex-start;
+  flex-flow: row wrap;
+  margin-bottom: 15px;
+  padding-left: 32px;
+}
+
+.searchBlock {
+  flex-flow: column;
+  margin-right: 8px;
+  flex-basis: 46%;
+}
+
+.watchListPanel {
+  flex-flow: column nowrap;
+}
+
+.watchListItem {
+  width: 100%;
+  justify-content: center;
+}

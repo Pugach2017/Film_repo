@@ -1,0 +1,20 @@
+.form {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+
+.label {
+  width: 200%;
+}
+
+.input {
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #9e9e9e;
+  border-radius: 3px;
+  background-color: #fafafa;
+  font-size: 14px;
+  color: #222;
+  width: 310px;
+}

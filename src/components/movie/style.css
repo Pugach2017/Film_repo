@@ -1,0 +1,36 @@
+.movie {
+  position: relative;
+  width: 200px;
+  padding: 8px;
+  color: #424242;
+  font-size: 0.75rem;
+  background-color: #fff;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.movie:hover .buttonBox {
+  opacity: 0.8;
+}
+
+.img {
+  display: block;
+}
+
+.average {
+  position: absolute;
+  border-width: 15px 13px 12px;
+  border-style: solid;
+  border-color: #e95557 #e95557 transparent;
+}
+
+.buttonBox {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  padding: 8px;
+  background-color: #fff;
+  opacity: 0;
+  box-shadow: -2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+  border-radius: 0px 0px 0px 5px;
+}
