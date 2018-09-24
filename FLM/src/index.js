@@ -1,11 +1,13 @@
 import React from 'react';
-import { whyDidYouUpdate } from 'why-did-you-update';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { Provider } from 'react-redux';
 import App from './components/app';
+import store from './redux/store';
+import './index.css';
 
-if (process.env.NODE_ENV !== 'production') {
-  whyDidYouUpdate(React);
-}
-
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root'),
+);

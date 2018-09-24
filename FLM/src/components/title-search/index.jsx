@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import withRenderLog from '../../hoc/withRenderLog';
+import fetchMovies from '../../redux/actions/fetch';
+import { getTitleUrl } from '../../services/api';
+
 import Panel from '../shared-ui/panel';
 import Button from '../shared-ui/button';
 import Icons from '../svg/icons';
@@ -8,7 +14,7 @@ import Style from './style.css';
 
 class TitleSearch extends Component {
   static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
+    fetchMovies: PropTypes.func.isRequired,
   };
 
   state = { title: '' };
@@ -19,12 +25,14 @@ class TitleSearch extends Component {
 
   submitTitle = evt => {
     evt.preventDefault();
+
     const { title } = this.state;
-    const { onSubmit } = this.props;
+    const { fetchMovies: fetchMoviesByTitle } = this.props;
 
     if (!title) return;
 
-    onSubmit(title);
+    const url = getTitleUrl(title);
+    fetchMoviesByTitle(url);
     this.setState({ title: '' });
   };
 
@@ -50,4 +58,12 @@ class TitleSearch extends Component {
   }
 }
 
-export default TitleSearch;
+const mapDispatchtoProps = { fetchMovies };
+
+export default compose(
+  connect(
+    null,
+    mapDispatchtoProps,
+  ),
+  withRenderLog,
+)(TitleSearch);

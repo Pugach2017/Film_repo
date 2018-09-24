@@ -1,10 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import withRenderLog from '../../hoc/withRenderLog';
+import { removeFromWatchlist } from '../../redux/actions/watchlist';
+import getWatchist from '../../redux/selectors/watchlist';
+
 import Panel from '../shared-ui/panel';
 import WatchMovie from '../watch-movie';
 import Style from './style.css';
 
-const Watchlist = ({ watchlist, onClickRemove, onClickInfo }) => (
+const Watchlist = ({
+  watchlist,
+  onClickInfo,
+  removeFromWatchlist: removeFromWatch,
+}) => (
   <Panel watchListPanel>
     <h3 className={Style.title}>Watchlist</h3>
     {watchlist.length > 0 && (
@@ -13,7 +23,7 @@ const Watchlist = ({ watchlist, onClickRemove, onClickInfo }) => (
           <li key={movie.id} className={Style.li}>
             <WatchMovie
               movie={movie}
-              onClickRemove={() => onClickRemove(movie)}
+              onClickRemove={() => removeFromWatch(movie)}
               onClickInfo={() => onClickInfo(movie.id)}
             />
           </li>
@@ -24,13 +34,21 @@ const Watchlist = ({ watchlist, onClickRemove, onClickInfo }) => (
 );
 
 Watchlist.propTypes = {
-  watchlist: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-    }),
-  ).isRequired,
-  onClickRemove: PropTypes.func.isRequired,
+  watchlist: PropTypes.arrayOf(Object).isRequired,
   onClickInfo: PropTypes.func.isRequired,
+  removeFromWatchlist: PropTypes.func.isRequired,
 };
 
-export default Watchlist;
+const mapStateToProps = state => ({
+  watchlist: getWatchist(state),
+});
+
+const mapDispatchToProps = { removeFromWatchlist };
+
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
+  withRenderLog,
+)(Watchlist);

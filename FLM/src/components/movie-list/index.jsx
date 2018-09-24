@@ -1,5 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import withRenderLog from '../../hoc/withRenderLog';
+
 import Movie from '../movie';
 import {
   getShortOverview,
@@ -7,9 +12,11 @@ import {
   imageUrl,
 } from '../../services/movie-list';
 
+import { addToWatchlist } from '../../redux/actions/watchlist';
+
 import Style from './style.css';
 
-const MovieList = ({ movies, onClickAdd, onClickInfo }) => (
+const MovieList = ({ movies, onClickInfo, addToWatchlist: addToWatch }) => (
   <ul className={Style.ul}>
     {movies.map(movie => (
       <li key={movie.id} className={Style.li}>
@@ -18,7 +25,7 @@ const MovieList = ({ movies, onClickAdd, onClickInfo }) => (
           releaseDate={getReleaseDate(movie.release_date)}
           overview={getShortOverview(movie.overview)}
           average={movie.vote_average}
-          onClickAdd={() => onClickAdd(movie)}
+          onClickAdd={() => addToWatch(movie)}
           onClickInfo={() => onClickInfo(movie.id)}
         />
       </li>
@@ -36,8 +43,16 @@ MovieList.propTypes = {
       poster_path: PropTypes.string,
     }).isRequired,
   ).isRequired,
-  onClickAdd: PropTypes.func.isRequired,
+  addToWatchlist: PropTypes.func.isRequired,
   onClickInfo: PropTypes.func.isRequired,
 };
 
-export default MovieList;
+const mapDispatchToProps = { addToWatchlist };
+
+export default compose(
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
+  withRenderLog,
+)(MovieList);
